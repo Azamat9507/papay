@@ -4,12 +4,6 @@ const app = express();
 const router = require("./router.js");
 
 
-
-// MongoDB connect
-const db = require("./server").db(); 
-const mongodb = require("mongodb");
-
-
 // Kirish code
 app.use(express.static("public"));
 app.use(express.json());
