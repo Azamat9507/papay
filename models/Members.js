@@ -32,11 +32,11 @@ class Member {
                 {mb_nick: 1, mb_password: 1})
             .exec();
 
-            assert.ok(member, Definer.err_auth3);
+            assert.ok(member, Definer.auth_err3);
 
 
             const isMatch = input.mb_password === member.mb_password;
-            assert.ok(isMatch, Definer.err_auth4);
+            assert.ok(isMatch, Definer.auth_err4);
             return await this.memberModel
             .findOne({mb_nick: input.mb_nick})
             .exec();
