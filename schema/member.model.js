@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const  {member_type_enums, member_status_enums} = require("../lib/config");
+const  {member_type_enums, member_status_enums, ordernary_enums} = require("../lib/config");
 
 
 const memberSchema = new mongoose.Schema({
@@ -10,12 +10,13 @@ const memberSchema = new mongoose.Schema({
     },
     mb_phone: {
         type: String,
-        required: true
+        required: true,
+        index: {unique: true, sparse: true}
     },
     mb_password: {
         type: String,
         required: true,
-        select: false
+        select: false,
     },
     mb_type: {
         type: String,
@@ -35,11 +36,11 @@ const memberSchema = new mongoose.Schema({
             message: "{VALUE} is not among permitted values"
         }
     },
-    mb_full_name: {
+    mb_address: {
         type: String,
         required: false,
     },
-    mb_address: {
+    mb_description: {
         type: String,
         required: false,
     },
@@ -50,38 +51,39 @@ const memberSchema = new mongoose.Schema({
     mb_point: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
     mb_top: {
         type: String,
         required: false,
         default: "N",
         enum: {
-            values: oredernary_enums,
-            message: "{VALUE} is not among permitted values"
+            values: ordernary_enums,
+            message: "{VALUE} is not among permitted values",
         },
     },
     mb_views: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
     mb_likes: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
     mb_follow_cnt: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
     mb_subscriber_cnt: {
         type: Number,
         required: false,
-        default: 0
+        default: 0,
     },
-},
-{timestamps: true});
+}, 
+{timestamps: true}
+);
 
 module.exports = mongoose.model("Member", memberSchema);
