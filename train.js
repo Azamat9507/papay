@@ -10,3 +10,9 @@
 //L - task
 
 
+function calculate(s) {
+    return eval(s);
+  }
+  
+  console.log(calculate("1 + 1"));
+  console.log(calculate("4 * 5"));
