@@ -58,6 +58,7 @@ const productSchema = new mongoose.Schema({
             message: "{VALUE} is not among permitted enum values}",
         },
     },
+    //fix my mistake
     product_description: { type: String, required: true},
     product_images: {type: Array, required: false, default: []},
     product_likes: {
