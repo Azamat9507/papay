@@ -10,9 +10,32 @@
 //L - task
 
 
-function calculate(s) {
-    return eval(s);
-  }
+// function calculate(s) {
+//     return eval(s);
+//   }
   
-  console.log(calculate("1 + 1"));
-  console.log(calculate("4 * 5"));
+//   console.log(calculate("1 + 1"));
+//   console.log(calculate("4 * 5"));
+
+//m-task
+
+class Member {
+  #counts = 0;
+
+  addMember(num) {
+    this.#counts += num;
+  }
+
+  removeMember(num) {
+    this.#counts -= num;
+  }
+
+  inform() {
+    console.log(`Hozirda mavjud ${this.#counts} memberlar.`);
+  }
+}
+
+const member = new Member();
+member.addMember(5);
+member.removeMember(2);
+member.inform(); 
