@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {product_collection_enums} = require("../lib/config");
+const {product_collection_enums, product_status_enums, product_size_enums, product_volume_enums} = require("../lib/config");
 const Schema = mongoose.Schema;
 
 
@@ -29,7 +29,7 @@ const productSchema = new mongoose.Schema({
     product_discount: {
         type: Number,
         required: false,
-        default: 0, 
+        default: 0
     },
     product_left_cnt: {
         type: Number,
@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
         default: "normal",
         required: function() {
             const sized_list = ['dish', 'salad', 'dessert'];
-            return sized_list.includes(this.product_collection)
+            return sized_list.includes(this.product_collection);
         },
         enum: {
             values: product_size_enums,
@@ -60,7 +60,7 @@ const productSchema = new mongoose.Schema({
     },
     product_discription: { type: String, required: true},
     product_images: {type: Array, required: false, default: []},
-    product_like: {
+    product_likes: {
         type: Number,
         required: false,
         default: 0, 
@@ -73,7 +73,7 @@ const productSchema = new mongoose.Schema({
     restaurant_mb_id: {
         type: Schema.Types.ObjectId,
         ref: "Member",
-        required: false
+        required: false,
     }, 
 }, {timestamps: true}); //createdAt, UpdatedAt
 
