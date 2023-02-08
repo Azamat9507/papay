@@ -40,7 +40,7 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
 
 restaurantController.signupProcess = async (req, res) => {
     try {
-        console.log("POST: cont/signup");
+        console.log("POST: cont/signupProcess");
         const data = req.body,
         member = new Member(),
         new_member = await member.signupData(data);
