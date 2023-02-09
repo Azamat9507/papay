@@ -18,7 +18,7 @@ restaurantController.home = (req, res) => {
 restaurantController.getMyRestaurantProducts = async (req, res) => {
     try {
         console.log("GET: cont/getMyRestaurantProducts");
-        // TO DO: Get my restaurant products
+        
         const product = new Product;
         const data = await product.getAllProductsDataResto(res.locals.member);
         res.render("restaurant-menu", {restaurant_data: data });
@@ -65,16 +65,16 @@ restaurantController.getLoginMyrestaurant = async (req, res) => {
 restaurantController.loginProcess = async (req, res) => {
     try {
         console.log("POST: cont/loginProcess");
-        const data = req.body;
-        console.log("data:", data);
-        res.send("submitted")
-        // member = new Member(),
-        // result = await member.loginData(data);
+        const data = req.body,
+        member = new Member(), 
+        result = await member.loginData(data);
 
-        // req.session.member = result;
-        // req.session.save(function(){
-        //     res.redirect('/resto/products/menu');
-        // }); 
+        req.session.member = result;
+        req.session.save(function(){
+           result.mb_type === 'ADMIN'
+            ? res.redirect("/resto/all-restaurant")
+            : res.redirect('/resto/products/menu');
+        }); 
     } catch (err) {
         console.log(`ERROR, cont/login, ${err.message}`);
         res.json({ state: "fail", message: err.message});
