@@ -1,5 +1,7 @@
+const assert = require("assert");
 const Member = require("../models/Members");
 const Product = require("../models/Product");
+const Definer = require("../lib/mistake");
 
 
 let restaurantController = module.exports;
@@ -11,52 +13,59 @@ restaurantController.home = (req, res) => {
 
     } catch(err) {
         console.log(`ERROR, cont/home, ${err.message}`);
-        res.json({ state: "fail", message: err.message});
+        res.json({ state: "fail", message: err.message}); 
     }
 };
 
 restaurantController.getMyRestaurantProducts = async (req, res) => {
     try {
-        console.log("GET: cont/getMyRestaurantProducts");
+        console.log("GET: cont/getMyRestaurantProducts"); 
         
         const product = new Product;
         const data = await product.getAllProductsDataResto(res.locals.member);
         res.render("restaurant-menu", {restaurant_data: data });
     } catch(err) {
         console.log(`ERROR, cont/getMyRestaurantProducts, ${err.message}`);
-        res.json({ state: "fail", message: err.message});
+        res.json({ state: "fail", message: err.message}); 
     }
 };
 
 restaurantController.getSignupMyRestaurant = async (req, res) => {
     try {
-        console.log("GET: cont/getSignupMyRestaurant");
+        console.log("GET: cont/getSignupMyRestaurant"); 
         res.render('signup');
     } catch(err) {
         console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`);
         res.json({ state: "fail", message: err.message});
+        
     }
 };
 
 restaurantController.signupProcess = async (req, res) => {
     try {
         console.log("POST: cont/signupProcess");
-        const data = req.body,
-        member = new Member(),
-        new_member = await member.signupData(data);
+        assert(req.file, Definer.general_err3); 
+        
+        let new_member = req.body;
+        new_member.mb_type ="RESTAURANT";
+        new_member.mb_image = req.file.path;
 
-        req.session.member = new_member;
+        const member = new Member();
+        const result = await member.signupData(new_member);
+        assert(result, Definer.general_err1);
+
+        req.session.member = result;
         res.redirect("/resto/products/menu");
     } catch (err) {
         console.log(`ERROR, cont/signupProcess, ${err.message}`);
         res.json({ state: "fail", message: err.message});
     }
 };
-
+// login page restaurant
 restaurantController.getLoginMyrestaurant = async (req, res) => {
     try {
         console.log("GET: cont/getLoginMyRestaurant");
-        res.render('login-page')
+        res.render('login-page');
     } catch (err) {
         console.log(`ERROR, cont/getLoginMyrestaurant, ${err.message}`);
         res.json({ state: "fail", message: err.message});

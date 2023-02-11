@@ -15,9 +15,9 @@ const store = new MongoDBStore({
 
 
 // Kirish code
-app.use(express.static("public"));
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.static("public")); //public folderni ochib berdi
+app.use(express.json()); // axios jsonda yuborib beradi bu bizaga ichidagi malumtni object qib beradi
+app.use(express.urlencoded({extended: true})); // bu bomasa traditional postingni server qabul qilmaydi
 
 // 2: Session code
 app.use(

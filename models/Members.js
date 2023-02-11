@@ -10,7 +10,7 @@ class Member {
         try {
             const salt = await bcrypt.genSalt();
             input.mb_password = await bcrypt.hash(input.mb_password, salt);
-            const new_member = new this.memberModel(input);
+            const new_member = new this.memberModel(input); 
 
             let result;
             try {
@@ -23,7 +23,7 @@ class Member {
             result.mb_password = "";
             return result;
         } catch(err) {
-            throw err;
+            throw err; 
         }
     }
 
@@ -48,7 +48,7 @@ class Member {
             .exec();
             
             
-        } catch(err) {
+        } catch(err) { 
             throw err;
         }
     }

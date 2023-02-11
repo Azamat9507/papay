@@ -155,7 +155,7 @@ body {
 .sign_input_frame .sign_up_frame {
     position: relative;
     margin-top: 15px;
-    width: 48%;
+    width: 49%;
     height: auto;
 
     display: flex;
@@ -234,7 +234,7 @@ body {
     width: 1px;
     height: 1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0,);
+    clip: rect(0, 0, 0, 0);
     border: 0;
 }
 
@@ -259,7 +259,7 @@ body {
 .filebox .upload-name {
     position: relative;
     padding: 20px;
-    width: 85px;
+    width: 85%;
     height: 55px;
 
     display: flex;
@@ -269,7 +269,7 @@ body {
     border-radius: 8px 0px 0px 8px;
 }
 
-.thubnail_desc {
+.thumbnail_desc {
     margin-top: 25px;
     font-family: 'GT Walsheim Pro';
     font-style: normal;
