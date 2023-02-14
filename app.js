@@ -20,7 +20,7 @@ app.use(express.json()); // axios jsonda yuborib beradi bu bizaga ichidagi malum
 app.use(express.urlencoded({extended: true})); // bu bomasa traditional postingni server qabul qilmaydi
 
 // 2: Session code
-app.use(
+app.use( 
     session({
         secret: process.env.SESSION_SECRET,
         cookie: {
@@ -32,7 +32,7 @@ app.use(
     })
 );
 app.use(function(req, res, next) {
-    res.locals.member = req.session.member;
+    res.locals.member = req.session.member; 
     next();
 });
 
