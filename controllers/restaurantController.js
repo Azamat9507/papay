@@ -102,7 +102,7 @@ restaurantController.logout = (req, res) => {
     }
 
 };
-// Restaurant validate
+// VALIDATE RESTAURANT
 restaurantController.validateAuthRestaurant = (req, res, next) => {
     if(req.session?.member?.mb_type ==="RESTAURANT") {
         req.member = req.session.member;
@@ -121,3 +121,28 @@ restaurantController.checkSessions = (req, res) => {
             message: "You are not authenticated"});
     }
 };
+//VALIDATE ADMIN
+restaurantController.validateAdmin = (req, res, next) => {
+    if(req.session?.member?.mb_type ==="ADMIN") {
+        req.member = req.session.member;
+        next()
+    } else {
+        const html = `<script>
+                alert('Admin page: Permission denied!');
+                window.location.replace('/resto');
+                </script>`;
+        res.end(html);
+    } 
+};
+
+restaurantController.getAllRestaurants = (req, res) => {
+    try {
+        console.log("GET cont/getAllRestaurants");
+        // to do: hamma restaurantlarni dbdan choqiramiz
+
+        res.render("all-restaurants");
+    } catch (err) {
+        console.log(`ERROR, cont/getAllRestaurants, ${err.message}`);
+        res.json({ state: "fail", message: err.message});
+    }
+}
