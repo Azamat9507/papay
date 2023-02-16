@@ -10,7 +10,8 @@ const uploader_members = require("./utils/upload-multer")("members");
  *       BSSR EJS       *
  ****************************/
 
-router_bssr.get("/", restaurantController.home); 
+router_bssr.get("/", restaurantController.home);  
+ 
 
 router_bssr
     .get("/sign-up", restaurantController.getSignupMyRestaurant)
@@ -40,7 +41,8 @@ productController.updateChosenProduct
 );
 
 router_bssr.get("/all-restaurant", restaurantController.validateAdmin,
- restaurantController.getAllRestaurants);
+restaurantController.getAllRestaurants);
 
 
-module.exports = router_bssr;
+module.exports = router_bssr; 
+

@@ -120,6 +120,7 @@ restaurantController.checkSessions = (req, res) => {
             state: "fail",
             message: "You are not authenticated"});
     }
+    
 };
 //VALIDATE ADMIN
 restaurantController.validateAdmin = (req, res, next) => {

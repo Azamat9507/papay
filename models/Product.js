@@ -33,7 +33,7 @@ class Product {
             return result;
             
         } catch (err) {
-            throw err;
+            throw err; 
         }
     }
     async updateChosenProductData(id, updated_data, mb_id) {
