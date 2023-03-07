@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const router = require("./router.js");
 const router_bssr = require("./router_bssr.js");
+const cookieParser = require("cookie-parser");
 
 
 let session = require("express-session");
@@ -18,6 +19,7 @@ const store = new MongoDBStore({
 app.use(express.static("public")); //public folderni ochib berdi
 app.use(express.json()); // axios jsonda yuborib beradi bu bizaga ichidagi malumtni object qib beradi
 app.use(express.urlencoded({extended: true})); // bu bomasa traditional postingni server qabul qilmaydi
+app.use(cookieParser());
 
 // 2: Session code
 app.use( 

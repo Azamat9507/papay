@@ -3,7 +3,7 @@ const Member = require("../models/Members");
 const Product = require("../models/Product");
 const Definer = require("../lib/mistake");
 const Restaurant = require("../models/Restaurant");
-
+ 
 
 let restaurantController = module.exports;
 
@@ -16,13 +16,13 @@ restaurantController.home = (req, res) => {
         console.log(`ERROR, cont/home, ${err.message}`);
         res.json({ state: "fail", message: err.message}); 
     }
-};
+}; 
 
 restaurantController.getMyRestaurantProducts = async (req, res) => {
     try {
         console.log("GET: cont/getMyRestaurantProducts"); 
         
-        const product = new Product;
+        const product = new Product();
         const data = await product.getAllProductsDataResto(res.locals.member);
         res.render("restaurant-menu", {restaurant_data: data });
     } catch(err) {
@@ -151,7 +151,7 @@ restaurantController.getAllRestaurants = async (req, res) => {
     }
 }; 
 
-restaurantController.updateRestaurantByAdmin = async (req, res) => {
+restaurantController.     updateRestaurantByAdmin = async (req, res) => {
   try {
     console.log("GET cont/updateRestaurantByAdmin");
 
