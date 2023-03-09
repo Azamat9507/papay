@@ -4,7 +4,7 @@ const ViewModel = require("../schema/view.model");
 class View {
   constructor(mb_id) {
     this.viewModel = ViewModel;
-    this.memberModel = this.memberModel;
+    this.memberModel = memberModel;
     this.mb_id = mb_id;
   }
 
