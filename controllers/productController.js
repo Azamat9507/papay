@@ -7,13 +7,13 @@ let productController = module.exports;
 
 productController.getAllProducts = async (req, res) => {
   try {
-    console.log("POST: cont/getAllProducts");
+    console.log("POST cont/getAllProducts");
     const product = new Product();
     const results = await product.getAllProductsData(req.member, req.body);
-    res.json({ state: "succeed", data: results });
-  } catch(err) {
+    await res.json({ state: "Succeeded!", data: results });
+  } catch (err) {
     console.log(`ERROR, cont/getAllProducts, ${err.message}`);
-    res.json({state: "fail", message: err.message });
+    res.json({ state: "failed", message: err.message });
   }
 };
  
@@ -61,11 +61,3 @@ productController.updateChosenProduct = async (req, res) => {
   }
 };
 
-productController.getAllProducts = async (req, res) => {
-  try {
-      console.log("POST: cont/getAllProducts");
-  } catch(err) {
-    console.log(`ERROR, cont/getAllProducts, ${err.message}`);
-    res.json({state: "fail", message: err.message });
-  }
-};

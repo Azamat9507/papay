@@ -1,8 +1,8 @@
 const assert = require("assert");
 const Member = require("../models/Members");
 
-let memberController = module.exports;
 const jwt = require("jsonwebtoken");
+let memberController = module.exports;
 const Definer = require("../lib/mistake");
 
 
@@ -92,6 +92,7 @@ memberController.getChosenMember = async (req, res) => {
     const id = req.params.id;
 
     const member = new Member();
+    console.log('ksajrkfsr')
     const result = await member.getChosenMemberData(req.member, id);
     
     res.json({ state: "succeed", data: result });

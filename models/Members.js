@@ -61,22 +61,22 @@ class Member {
   async getChosenMemberData(member, id) {
     try {
       id = shapeIntoMongooseObjectId(id);
-      console.log("member:::", member);
 
-      if (member) {
-        await this.viewChosenItemByMember(member, id, "member");
+      console.log("member:", member) // if auth, shows data. if not null
+
+      if (member) { // not available for non-users
+        // +1 for each view if not seen before
+        await this.viewChosenItemByMember( member, id, 'member')
+                     // who called the method, id, what type of item am i looking at
       }
 
       const result = await this.memberModel
-        .aggregate([
-          { $match: { _id: id, mb_status: "ACTIVE" } }, 
-          { $unset: "mb_password"},
-        ])
+        .aggregate([{ $match: { _id: id, mb_status: "ACTIVE" } },{$unset: "mb_password"}])
         .exec();
 
       assert.ok(result, Definer.general_err2);
       return result[0];
-    } catch(err) { 
+    } catch (err) {
       throw err;
     }
   }

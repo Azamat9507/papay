@@ -8,14 +8,14 @@ class View {
     this.mb_id = mb_id;
   }
 
-  async validateChosenTarget(view_ref_id, group_type) {
+  async validateChosenTarget(_id, group_type) {
     try {
       let result;
       switch(group_type) {
         case "member":
           result = await this.memberModel
-            .findById({ 
-              _id: view_ref_id, 
+            .findOne({ 
+              _id: _id, 
               mb_status: "ACTIVE",
             })
             .exec();
