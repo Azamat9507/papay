@@ -21,7 +21,7 @@ class View {
 
       return !!result; // returns boolean value
     } catch (err) {
-      throw err;
+      throw err; 
     }
   }
   async insertMemberView(view_ref_id, group_type) {

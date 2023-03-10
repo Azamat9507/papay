@@ -58,6 +58,42 @@ class Product {
       throw err;
     }
   }
+
+  async addNewProductData(data, member) {
+    try {
+      data.restaurant_mb_id = shapeIntoMongooseObjectId(member._id);
+
+      const new_product = this.productModel(data);
+      const result = await new_product.save();
+
+      assert.ok(result, Definer.product_err1);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async updateChosenProductData(id, updated_data, mb_id) {
+    try {
+      id = shapeIntoMongooseObjectId(id);
+      mb_id = shapeIntoMongooseObjectId(mb_id);
+
+      const result = await this.productModel
+        .findOneAndUpdate({ _id: id, restaurant_mb_id: mb_id }, updated_data, {
+          runValidators: true,
+          lean: true,
+          returnDocument: "after", // yangi ma'lumotlarni ko'rsatadi
+          // "oldin" eski ma'lumotlarni ko'rsatadi // lekin db o'zgaradi
+        })
+        .exec();
+
+      assert.ok(result, Definer.general_err1);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
+// cont => servic model => db schema model
 
 module.exports = Product;

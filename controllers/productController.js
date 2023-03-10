@@ -24,24 +24,24 @@ productController.getAllProducts = async (req, res) => {
 productController.addNewProduct = async (req, res) => {
   try {
     console.log("POST: cont/addNewProduct");
-    assert(req.files, Definer.general_err3);
-    
+    assert(req.files, Definer.general_err3); // try & catch sifatida ishlaydi
     const product = new Product();
     let data = req.body;
+    
 
     data.product_images = req.files.map((ele) => {
-      return ele.path;
+      return ele.path; //har bir fayl qaerga yuklanganligini ko'rsatadi
     });
 
     const result = await product.addNewProductData(data, req.member);
-    const html = `<script>
-                    alert("new product added successfully");
-                    window.location.replace('/resto/products/menu');
-                </script>`;
-  res.end(html); 
-  } catch(err) {
-    console.log(`ERROR, cont/addNewProduct, ${err.message}`);
-      
+
+    // console.log(data) // shows path
+    const html = `<script>alert('new dish added successfully');
+    window.location.replace('/resto/products/menu') 
+    </script>`;
+    res.end(html);
+  } catch (err) {
+    console.log(`ERROR cont/addNewProduct, ${err.message}`);
   }
 };
 productController.updateChosenProduct = async (req, res) => {
