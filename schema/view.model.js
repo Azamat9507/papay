@@ -21,7 +21,8 @@ const viewSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: { createdAt: true} }
+  { timestamps: { createdAt: true } }
 );
+
 
 module.exports = mongoose.model("View", viewSchema);
