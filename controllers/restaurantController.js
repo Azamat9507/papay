@@ -7,15 +7,32 @@ const Restaurant = require("../models/Restaurant");
 
 let restaurantController = module.exports;
 
-restaurantController.home = (req, res) => {
-    try {
-        console.log('GET: cont/home');
-        res.render("home-page");
+restaurantController.getRestaurants = async (req, res) => {
+  try {
+    console.log('GET: cont/getRestaurants');
+    const data = req.query,
+      restaurant = new Restaurant(),
+      result = await restaurant.getRestaurantsData(req.member, data);
+    res.json({ state: "success", data: result });
+  } catch(err) {
+    console.log(`ERROR, cont/getRestaurants, ${err.message}`);
+    res.json({ state: "fail", message: err.message}); 
+  }
+};
 
-    } catch(err) {
-        console.log(`ERROR, cont/home, ${err.message}`);
-        res.json({ state: "fail", message: err.message}); 
-    }
+/*****************************
+ *   BSSSR RELATED METHODS  *
+ * **************************/
+
+restaurantController.home = (req, res) => {
+  try {
+    console.log('GET: cont/home');
+    res.render("home-page");
+
+  } catch(err) {
+    console.log(`ERROR, cont/home, ${err.message}`);
+    res.json({ state: "fail", message: err.message}); 
+  }
 }; 
 
 restaurantController.getMyRestaurantProducts = async (req, res) => {
@@ -115,7 +132,7 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
 
 restaurantController.checkSessions = (req, res) => {
     if (req.session?.member) {
-        res.json({ state: "succeed", data: req.session.member});
+        res.json({ state: "success", data: req.session.member});
     } else {
         res.json({
             state: "fail",
@@ -151,7 +168,7 @@ restaurantController.getAllRestaurants = async (req, res) => {
     }
 }; 
 
-restaurantController.     updateRestaurantByAdmin = async (req, res) => {
+restaurantController.updateRestaurantByAdmin = async (req, res) => {
   try {
     console.log("GET cont/updateRestaurantByAdmin");
 
