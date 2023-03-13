@@ -18,7 +18,6 @@ productController.getAllProducts = async (req, res) => {
 };
 
 productController.getChosenProduct = async (req, res) => {
-  console.log("slfkj");
   try {
     console.log("GET cont/getChosenProduct");
     const product = new Product(), 

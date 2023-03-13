@@ -46,7 +46,7 @@ class View {
       });
       const result = await new_view.save();
 
-      // increase views in target items
+      // target items view sonini bittaga oshiramiz
       await this.modifyItemViewCounts(view_ref_id, group_type);
 
       return result;

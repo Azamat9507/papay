@@ -72,13 +72,14 @@ class Member {
       const result = await this.memberModel
         .aggregate([{ $match: { _id: id, mb_status: "ACTIVE" } },{$unset: "mb_password"}])
         .exec();
+        // todo: check auth member product likes
 
       assert.ok(result, Definer.general_err2);
       return result[0];
     } catch (err) {
       throw err;
     }
-  }
+  }       
 
   async viewChosenItemByMember(member, view_ref_id, group_type) {
     try {
