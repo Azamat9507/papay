@@ -1,11 +1,11 @@
 const { shapeIntoMongooseObjectId } = require("../lib/config");
-const OrderModel = require("../schema/order.model");
-const OrderItemModel = ("../schema/order_item.model.js");
+const OrderModel = require("../schema/order.model.js");
+const OrderItemModel = require("../schema/order_item.model.js");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 
 class Order {
-  constructor() { 
+  constructor() {
     this.orderModel = OrderModel;
     this.orderItemModel = OrderItemModel;
   }
@@ -58,6 +58,7 @@ class Order {
     }
   }
 
+
   async recordOrderItemsData(order_id, data) {
     try {
      const pro_list = data.map(async (item) => {
@@ -70,12 +71,12 @@ class Order {
       throw err;
     }
   }
-  
+
   async saveOrderItemsData(item, order_id) {
     try {
       order_id = shapeIntoMongooseObjectId(order_id);
       item._id = shapeIntoMongooseObjectId(item._id);
-      console.log("keldi");
+
 
       const order_item = new this.orderItemModel({
         item_quantity: item["quantity"],
@@ -83,6 +84,8 @@ class Order {
         order_id: order_id,
         product_id: item["_id"],
       });
+      console.log("keldi");
+
       const result = await order_item.save();
       assert.ok(result, Definer.order_err2);
       return "created";
