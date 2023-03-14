@@ -7,15 +7,16 @@ const assert = require("assert");
 class Order {
   constructor() { 
     this.orderModel = OrderModel;
-    this.OrderItemModel = OrderItemModel;
+    this.orderItemModel = OrderItemModel;
   }
 
   async createOrderData(member, data) {
     try {
-      let order_total_amount = 0, delivery_cost = 0;
+      let order_total_amount = 0, 
+        delivery_cost = 0;
       const mb_id = shapeIntoMongooseObjectId(member._id);
 
-      data.map(item => {
+      data.map((item) => {
         order_total_amount += item["quantity"] * item["price"];
       });
 
@@ -30,7 +31,10 @@ class Order {
         mb_id
       );
       console.log("order_id:::", order_id);
+
         //TO DO order items creation
+      await this.recordOrderItemsData(order_id, data);
+
       return order_id;
     } catch (err) {
       throw err;
@@ -42,7 +46,7 @@ class Order {
       const new_order = new this.orderModel({
         order_total_amount: order_total_amount,
         order_delivery_cost: delivery_cost,
-        mb_id: mb_id
+        mb_id: mb_id,
     });
     const result = await new_order.save();
     assert.ok(result, Definer.order_err1);
@@ -51,6 +55,40 @@ class Order {
     } catch(err) {
       console.log(err);
       throw new Error(Definer.order_err1);
+    }
+  }
+
+  async recordOrderItemsData(order_id, data) {
+    try {
+     const pro_list = data.map(async (item) => {
+      return await this.saveOrderItemsData(item, order_id);
+     });
+     const results = await Promise.all(pro_list);
+     console.log("result:::", results);
+     return true;
+    } catch (err) {
+      throw err;
+    }
+  }
+  
+  async saveOrderItemsData(item, order_id) {
+    try {
+      order_id = shapeIntoMongooseObjectId(order_id);
+      item._id = shapeIntoMongooseObjectId(item._id);
+      console.log("keldi");
+
+      const order_item = new this.orderItemModel({
+        item_quantity: item["quantity"],
+        item_price: item["price"],
+        order_id: order_id,
+        product_id: item["_id"],
+      });
+      const result = await order_item.save();
+      assert.ok(result, Definer.order_err2);
+      return "created";
+    } catch (err) {
+      console.log(err);
+      throw new Error(Definer.order_err2);
     }
   }
 
