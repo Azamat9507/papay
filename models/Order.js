@@ -1,8 +1,9 @@
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const { shapeIntoMongooseObjectId, order_status_enums } = require("../lib/config");
 const OrderModel = require("../schema/order.model.js");
 const OrderItemModel = require("../schema/order_item.model.js");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
+const { query } = require("express");
 
 class Order {
   constructor() {
@@ -84,7 +85,6 @@ class Order {
         order_id: order_id,
         product_id: item["_id"],
       });
-      console.log("keldi");
 
       const result = await order_item.save();
       assert.ok(result, Definer.order_err2);
@@ -95,6 +95,41 @@ class Order {
     }
   }
 
-}
+  async getMyOrdersData(member, query) {
+    try {
+      const mb_id = shapeIntoMongooseObjectId(member._id),
+        order_status = query.status.toUpperCase(),
+        matches = { mb_id: mb_id, order_status: order_status };
+
+      const result = await this.orderModel
+        .aggregate([
+          { $match: matches }, 
+          { $sort: { createAt: -1 } },
+          {
+            $lookup: {
+              from: "orderitems",
+              localField: "_id",
+              foreignField: "order_id",
+              as: "order_items",
+            },
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "order_items.product_id",
+              foreignField: "_id",
+              as: "product_data",
+            },
+          },
+        ])
+        .exec();
+
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+};
 
 module.exports = Order;
