@@ -1,5 +1,7 @@
 // K- task
 
+const Member = require("./models/Members");
+
 // function FootballPoints(wins, draws, losses) {
 //     return (wins * 3) + (draws * 1) - (losses * 0);
 //   }
@@ -19,23 +21,35 @@
 
 //m-task
 
-class Member {
-  #counts = 0;
+// class Member {
+//   #counts = 0;
 
-  addMember(num) {
-    this.#counts += num;
-  }
+//   addMember(num) {
+//     this.#counts += num;
+//   }
 
-  removeMember(num) {
-    this.#counts -= num;
-  }
+//   removeMember(num) {
+//     this.#counts -= num;
+//   }
 
-  inform() {
-    console.log(`Hozirda mavjud ${this.#counts} memberlar.`);
-  }
-}
+//   inform() {
+//     console.log(`Hozirda mavjud ${this.#counts} memberlar.`);
+//   }
+// }
 
-const member = new Member();
-member.addMember(5);
-member.removeMember(2);
-member.inform(); 
+// const member = new Member();
+// member.addMember(5);
+// member.removeMember(2);
+// member.inform(); 
+
+
+// const person = {
+//   name: "Maxim",
+//   age: 28,
+//   greet: function() {
+//     console.log("Greet!");
+//   }
+// }
+// person.greet();
+// const what = person.age;
+// console.log(what)
