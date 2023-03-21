@@ -3,6 +3,7 @@ const { shapeIntoMongooseObjectId } = require("../lib/config");
 const Definer = require("../lib/mistake");
 const FollowModel = require("../schema/follow.model");
 const MemberModel = require("../schema/member.model");
+const { query } = require("express");
 
 
 class Follow {
@@ -94,7 +95,38 @@ class Follow {
     } catch (err) {
       throw err;
     } 
-  } 
+  }
+  
+  async getMemberFollowingsData(inquery) {
+    try {
+      const subscriber_id = shapeIntoMongooseObjectId(inquery.mb_id),
+        page = inquery.page * 1,
+        limit = inquery.limit * 1;
+
+        const result = await this.followModel
+          .aggregate([
+            { $match: { subscriber_id: subscriber_id } },
+            { $sort: { createdAt: -1 } },
+            { $skip: (page - 1 ) * limit },
+            { $limit: limit },
+            { 
+              $lookup: {
+                from: "members", 
+                localField: "follow_id", 
+                foreignField: "_id", 
+                as: "follow_member_data",
+              }, 
+            },
+            { $unwind: "$follow_member_data" },
+          ])
+          .exec();
+
+        assert.ok(result, Definer.follow_err3);
+        return result;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 
