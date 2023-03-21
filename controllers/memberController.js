@@ -101,7 +101,7 @@ memberController.getChosenMember = async (req, res) => {
       console.log(`ERROR cont/getChosenMember, ${err.message}`);
       res.json({ state: "Failed", message: err.message });
   }
-}
+};
 
 memberController.retrieveAuthMember = (req, res, next) => {
   try {
@@ -112,4 +112,4 @@ memberController.retrieveAuthMember = (req, res, next) => {
     console.log(`ERROR cont/retrieveAuthMember, ${err.message}`);
     next();
   }
-}
+};

@@ -14,7 +14,7 @@ const orderSchema = new mongoose.Schema(
         values: order_status_enums, 
         message: "{VALUE} is not among permitted enum values",
       },
-      },
+    },
     mb_id: { type: Schema.Types.ObjectId, ref: "Member", required: false },
   },
   { timestamps: true } 
