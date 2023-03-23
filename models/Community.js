@@ -1,7 +1,11 @@
 const BoArticleModel = require("../schema/bo_article.model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
-const { shapeIntoMongooseObjectId, board_id_enum_list } = require("../lib/config");
+const { 
+  shapeIntoMongooseObjectId, 
+  board_id_enum_list, 
+  lookup_auth_member_liked, 
+} = require("../lib/config");
 const { restart } = require("nodemon");
 const Member = require("./Members");
 
@@ -52,8 +56,8 @@ class Community {
               as: "member_data",
             },
           },
-          { $unwind: "$member_data"},
-            //to do check auth member liked the chosen target
+          { $unwind: "$member_data" },
+          lookup_auth_member_liked(auth_mb_id), //done check auth member liked the chosen target
         ])
         .exec();
         assert.ok(result, Definer.article_err2);
@@ -92,8 +96,8 @@ class Community {
             as: "member_data",
           },
         },
-        { $unwind: "$member_data"},
-          //to do check auth member liked the chosen target
+        { $unwind: "$member_data" },
+        lookup_auth_member_liked(auth_mb_id),//done check auth member liked the chosen target
 
       ])
       .exec();  

@@ -73,8 +73,11 @@ class Member {
       if (member) {
         //+1 for each view if not seen before
         await this.viewChosenItemByMember(member, id, "member");
-         // todo: check auth member product likes
-        aggregateQuery.push(lookup_auth_member_following(auth_mb_id, "members"));
+         // todo: check auth member liked the chosen target
+        aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
+        aggregateQuery.push(
+          lookup_auth_member_following(auth_mb_id, "members")
+        );
       }
 
       const result = await this.memberModel.aggregate(aggregateQuery).exec();
