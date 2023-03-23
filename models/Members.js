@@ -2,7 +2,11 @@ const MemberModel = require("../schema/member.model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require('bcryptjs');
-const { shapeIntoMongooseObjectId, lookup_auth_member_following } = require("../lib/config");
+const {
+  shapeIntoMongooseObjectId, 
+  lookup_auth_member_following, 
+  lookup_auth_member_liked, 
+} = require("../lib/config");
 const { restart } = require("nodemon");
 const View = require("./View");
 const Like = require("./Like");
@@ -73,7 +77,7 @@ class Member {
       if (member) {
         //+1 for each view if not seen before
         await this.viewChosenItemByMember(member, id, "member");
-         // todo: check auth member liked the chosen target
+         // done: check auth member liked the chosen target
         aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
         aggregateQuery.push(
           lookup_auth_member_following(auth_mb_id, "members")
